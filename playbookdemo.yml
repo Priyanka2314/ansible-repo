@@ -1,0 +1,39 @@
+- hosts: 32.236.43.61
+  become: true
+
+  tasks:
+
+    - name: install nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: start the service
+      service:
+        name: nginx
+        state: started
+
+    - name: copy the file
+      copy:
+        src: /home/ansible/copyplaybook.txt
+        dest: /home/ansible/
+      tags: copyfile
+      notify: restarted
+
+    - name: create a file
+      file:
+        path: /home/ansible/demopiple.txt
+        state: touch
+      tags: createFile
+
+    - name: get the uptime
+      command: uptime
+      register: uptime_output
+      tags: getuptime
+
+    - name: display the uptime
+      debug:
+        msg: "uptime on 32.236.43.61 is {{ uptime_output.stdout }}"
+  handlers:
+      - name: restarted
+        service: name=nginx state=restarted   
