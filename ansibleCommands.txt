@@ -1,0 +1,98 @@
+COMMAND: sudo yum install -y ansible
+PURPOSE: To install ansible
+
+COMMAND: ssh ansible@32.236.43.61
+PURPOSE: Login to remote managed server as ansible user.
+
+COMMAND: ssh-copy-id ansible@32.236.43.61
+PURPOSE: Copy SSH public key to remote server for passwordless login.
+
+COMMAND: cd /etc/ansible/
+PURPOSE: Move to Ansible configuration directory.
+
+COMMAND: ansible --version
+PURPOSE: Check installed Ansible version.
+
+COMMAND: ansible-doc -l | wc -l
+PURPOSE: Count available Ansible modules/plugins.
+
+COMMAND: ansible-doc -l | grep -i user
+PURPOSE: Search user-related Ansible modules.
+
+COMMAND: ansible-doc -l | grep -i yum
+PURPOSE: Search yum-related Ansible modules.
+
+COMMAND: ansible-doc -l | grep -i apt
+PURPOSE: Search apt-related Ansible modules.
+
+COMMAND: ansible-doc -l | grep -i aws
+PURPOSE: Search AWS-related Ansible modules.
+
+COMMAND: ansible-doc -l | grep -i ping
+PURPOSE: Search ping-related Ansible modules.
+
+COMMAND: ansible-inventory --list
+PURPOSE: Display parsed inventory in JSON format.
+
+COMMAND: ansible 32.236.43.61 -i hosts.ini -m ping
+PURPOSE: Test Ansible connectivity to remote host using inventory file.
+
+COMMAND: ansible 32.236.43.61 -m ping
+PURPOSE: Test Ansible connectivity using default inventory from ansible.cfg.
+
+COMMAND: ansible 32.236.43.61 -i hosts.ini -m file -a "path=/home/ansible/demofile.txt state=touch"
+PURPOSE: Create an empty file on remote server.
+
+COMMAND: ansible 32.236.43.61 -i /etc/ansible/hosts.ini -m copy -a "src=/home/ansible/democopy.txt dest=/home/ansible/"
+PURPOSE: Copy a file from Ansible control node to remote server.
+
+COMMAND: ansible -m command -a "uptime" 32.236.43.61
+PURPOSE: Run uptime command on remote server.
+
+COMMAND: ansible -m package -a "name=nginx state=installed" 32.236.43.61 --become
+PURPOSE: Install nginx package with sudo/root privilege.
+
+COMMAND: ansible -m service -a "name=nginx state=started" 32.236.43.61 --become
+PURPOSE: Start nginx service with sudo/root privilege.
+
+COMMAND: ansible -m setup 32.236.43.61
+PURPOSE: Collect system facts from remote server.
+
+COMMAND: ansible 32.236.43.61 -i /etc/ansible/hosts.ini -m user -a "name=demouser password={{ 'password' | password_hash('sha512') }}" --become
+PURPOSE: Create user demouser with encrypted password.
+
+COMMAND: ansible-playbook demoplaybook.yml --syntax-check
+PURPOSE: Check playbook YAML syntax without running tasks.
+
+COMMAND: ansible-playbook demoplaybook.yml --check
+PURPOSE: Dry-run playbook without making real changes.
+
+COMMAND: ansible-playbook playbookdemo.yml --syntax-check
+PURPOSE: Check syntax of playbookdemo.yml.
+
+COMMAND: ansible-playbook playbookdemo.yml --check
+PURPOSE: Dry-run playbookdemo.yml.
+
+COMMAND: ansible-playbook playbookdemo.yml
+PURPOSE: Execute the playbook and apply actual changes.
+
+COMMAND: ansible-playbook playbookdemo.yml --tags copyfile
+PURPOSE: Run only tasks tagged copyfile.
+
+COMMAND: ansible-playbook playbookdemo.yml --tags getuptime
+PURPOSE: Run only tasks tagged getuptime.
+
+COMMAND: sudo chown ansible:ansible /home/ansible/playbookdemo.yml
+PURPOSE: Change ownership of playbook file to ansible user.
+
+COMMAND: ansible-vault encrypt /home/ansible/playbookdemo.yml
+PURPOSE: Encrypt playbook using Ansible Vault.
+
+COMMAND: ansible-vault view playbookdemo.yml
+PURPOSE: View encrypted vault file after entering password.
+
+COMMAND: ansible-vault decrypt playbookdemo.yml
+PURPOSE: Decrypt encrypted Ansible Vault file.
+
+COMMAND: sudo ansible-galaxy init /etc/ansible/roles/nginxrole
+PURPOSE: Create a new Ansible role named nginxrole.
